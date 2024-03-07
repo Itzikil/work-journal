@@ -1,5 +1,5 @@
 <template>
-  <section class="calendar">
+  <section class="calendar container">
     <calendar @showDay="showDay"/>
     <day v-if="selectedDay" :day="selectedDay" />
   </section>

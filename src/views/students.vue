@@ -1,10 +1,10 @@
 <template>
   <section class="students-container container">
     <ul class="student-list">
-      <li v-for="student in students" :key="student._id">
-        <p>{{ student.name }}</p>
-        <p>{{ student.day }}</p>
-        <p>₪{{ student.price?.toLocaleString() }}</p>
+      <li v-for="student in students" :key="student._id" class="student-info">
+        <p class="student-name">{{ student.name }}</p>
+        <p class="student-day">{{ student.day }}</p>
+        <p class="student-price">₪{{ student.price?.toLocaleString() }}</p>
         <button @click="removeStudent(student._id)">x</button>
         <router-link :to="`/student/${student._id}`">Details</router-link>
       </li>

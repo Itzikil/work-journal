@@ -6,16 +6,16 @@
     </div>
     <div class="monthly-income">
       <div>
-        <button @click="currMonth--">1</button>
+        <button @click="currMonth--">&lt</button>
         <p>Earning</p>
         <p>₪ {{ totalMonthEarn().paid }}</p>
       </div>
       <p>Monthly</p>
       <div>
+        <button @click="currMonth++">></button>
         <p>Unpaid</p>
         <p>₪ {{ totalMonthEarn().arrived }}</p>
       </div>
-      <button @click="currMonth++">1</button>
     </div>
     <div class="total">
       <p>Total monthly earn </p>
