@@ -7,10 +7,10 @@
             <div class="student-slot student" v-for="student in studentsByHour[hour]" :key="student.id"
                 :style="calculateStudentStyle(student)">
                 <p>{{ student.name }}</p> 
-                <div>
-                    <button @click="addClass(student, 'hevriz')">hevriz</button>
-                    <button @click="addClass(student, 'arrived')">arrived</button>
-                    <button @click="addClass(student, 'paid')">paid</button>
+                <div class="btns-container">
+                    <button @click="addClass(student, 'hevriz')"><img src="../assets/imgs/x.svg" alt="didnt come"></button>
+                    <button @click="addClass(student, 'arrived')"><img src="../assets/imgs/v.svg" alt="arrived"></button>
+                    <button @click="addClass(student, 'paid')"><img src="../assets/imgs/paid.svg" alt="paid"></button>
                 </div>
             </div>
         </div>

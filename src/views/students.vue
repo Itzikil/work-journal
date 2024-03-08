@@ -2,11 +2,15 @@
   <section class="students-container container">
     <ul class="student-list">
       <li v-for="student in students" :key="student._id" class="student-info">
+        <router-link :to="`/student/${student._id}`">
         <p class="student-name">{{ student.name }}</p>
-        <p class="student-day">{{ student.day }}</p>
-        <p class="student-price">₪{{ student.price?.toLocaleString() }}</p>
+        <div class="flex justify-space align-center">
+          <p class="student-day">{{ student.day }}</p>
+          <p class="student-price">₪{{ student.price?.toLocaleString() }}</p>
+        </div>
         <button @click="removeStudent(student._id)">x</button>
-        <router-link :to="`/student/${student._id}`">Details</router-link>
+        </router-link>
+        <!-- <router-link :to="`/student/${student._id}`">Details</router-link> -->
       </li>
     </ul>
     <button @click="openAddStudent = !openAddStudent">Add student</button>

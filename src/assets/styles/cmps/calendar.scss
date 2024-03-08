@@ -6,6 +6,7 @@
         margin-block: 15px;
         gap: 15px;
         text-align: center;
+
         >* {
             margin: 0;
         }
@@ -25,10 +26,14 @@
 
         td {
             cursor: pointer;
-
+            padding: 5px;
             .calendar-date {
                 font-weight: 600;
                 margin: 0;
+            }
+
+            .students-count {
+                font-size: 0.6rem;
             }
 
             &.today {
@@ -45,12 +50,10 @@
     @media (max-width:600px) {
         .calendar {
             td {
-                .students-in-day{
+                .students-in-day {
                     display: none;
                 }
-                .students-count{
-                    font-size: 0.7rem;
-                }
+
             }
         }
     }

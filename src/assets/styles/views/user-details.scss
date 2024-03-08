@@ -75,5 +75,9 @@
     @media (max-width:650px) {
         display: flex;
         flex-direction: column;
+
+        .stats {
+            min-height: 250px;
+        }
     }
 }
