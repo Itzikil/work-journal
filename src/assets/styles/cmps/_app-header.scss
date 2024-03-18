@@ -40,6 +40,7 @@ header {
             &.upper-curve {
                 border-bottom-right-radius: 20px;
             }
+
             &.lower-curve {
                 border-top-right-radius: 20px;
             }
@@ -78,10 +79,19 @@ header {
 
 
     @media (max-width:650px) {
+        img {
+            width: 30px !important;
+            height: 30px;
+        }
+
         nav {
-            position: fixed;
-            height: 100vh;
-            width: 20%;
+            flex-direction: row;
+            border-radius: 0px;
+
+            .loggedin-user {
+
+                background-color: transparent;
+            }
 
             .link-container {
                 padding-inline-start: 0px;

@@ -6,13 +6,13 @@
     </div>
     <div class="monthly-income">
       <div>
-        <button @click="currMonth--">&lt</button>
+        <button @click="prevMonth">&lt</button>
         <p>Earning</p>
         <p>₪ {{ totalMonthEarn().paid }}</p>
       </div>
-      <p>Monthly {{currMonth}}</p>
+      <p> {{monthNames[currentMonth]}} </p>
       <div>
-        <button @click="currMonth++">></button>
+        <button @click="nextMonth">></button>
         <p>Unpaid</p>
         <p>₪ {{ totalMonthEarn().arrived }}</p>
       </div>
@@ -59,8 +59,9 @@ export default {
   data() {
     return {
       currStudent: null,
-      currMonth: new Date().getMonth(),
-      currYear: new Date().getFullYear(),
+      currentMonth: new Date().getMonth(),
+      currentYear: new Date().getFullYear(),
+      monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     }
   },
   async created() {
@@ -91,12 +92,25 @@ export default {
     },
   },
   methods: {
+    prevMonth() {
+            this.currentMonth -= 1;
+            if (this.currentMonth < 0) {
+                this.currentMonth = 11;
+                this.currentYear -= 1;
+            }
+        },
+        nextMonth() {
+            this.currentMonth += 1;
+            if (this.currentMonth > 11) {
+                this.currentMonth = 0;
+                this.currentYear += 1;
+            }
+        },
     classesInMonth(student, otherMonth) {
-      var month = otherMonth || this.currMonth
-
-      // console.log(`${month}.${this.currYear}`);
+      var month = otherMonth || this.currentMonth
       // console.log(`${student.classes[0].date.split(".")[1]}.${student.classes[0].date.split(".")[2]}`);
-      return student.classes.filter(lesson => +lesson.date.split(".")[1] === month + 1)
+      // console.log(`${month + 1}.${this.currentYear}`);
+      return student.classes.filter(lesson => `${lesson.date.split(".")[1]}.${lesson.date.split(".")[2]}` === `${month + 1}.${this.currentYear}`)
     },
     paidThisMonth(student) {
       return this.classesInMonth(student).filter(lesson => lesson.status === 'paid')
