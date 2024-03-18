@@ -29,7 +29,12 @@
       </router-link>
       <!-- <router-link to="/review">Reviews</router-link> -->
       <!-- <router-link to="/chat">Chat</router-link> -->
-      <router-link v-if="!loggedInUser" to="/login">Login / Signup</router-link>
+      <router-link  v-if="!loggedInUser" to="/login" class="link-container">
+        <div :class="['a-container', {active: $route.path === '/about'}]">
+          <img src="../assets/imgs/header/login.svg" alt="">
+          <!-- <p>Login / Signup</p> -->
+        </div>
+      </router-link>
       <!-- <router-link to="/about" class="link-container">
         <div :class="['a-container', {active: $route.path === '/about'}]">
           <img src="../assets/imgs/header/about.svg" alt="">

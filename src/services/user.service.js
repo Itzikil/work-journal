@@ -66,7 +66,7 @@ async function login(userCred) {
 }
 async function signup(userCred) {
     // userCred.score = 10000
-    if (!userCred.imgUrl) userCred.imgUrl = 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png'
+    if (!userCred.imgUrl) userCred.imgUrl = 'https://res.cloudinary.com/dtgejpwv9/image/upload/v1670834784/gigerr/user-img/shacar_inrgw1.jpg'
     const user = await storageService.post('user', userCred)
     // const user = await httpService.post('auth/signup', userCred)
     socketService.login(user._id)
