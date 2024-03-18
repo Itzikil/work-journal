@@ -3,11 +3,6 @@ header {
     flex-direction: column;
     background-color: #e1eceb;
 
-    a {
-        color: whitesmoke;
-        font-weight: 500;
-    }
-
     .loggedin-user {
         display: flex;
         align-items: center;
@@ -35,29 +30,68 @@ header {
         background-color: $clr8;
         border-end-end-radius: 50px;
         border-start-end-radius: 50px;
+        // background-color: #e1eceb;
+
+        a {
+            background-color: $clr8;
+            color: whitesmoke;
+            font-weight: 500;
+
+            &.upper-curve {
+                border-bottom-right-radius: 20px;
+            }
+            &.lower-curve {
+                border-top-right-radius: 20px;
+            }
+        }
+
+        .link-container {
+            width: 100%;
+            padding-inline-start: 40px;
+
+            .a-container {
+                display: flex;
+                gap: 20px;
+                align-items: center;
+                padding: 10px;
+                padding-inline: 20px;
+
+                img {
+                    width: 30px;
+                    height: 30px;
+                }
+
+                &:hover,
+                &.active {
+                    color: $clr1;
+                    background-color: #e1eceb;
+                    border-start-start-radius: 50px;
+                    border-end-start-radius: 50px;
+                    transition: background-color 0.5s;
+                }
+
+            }
+
+        }
+
     }
 
-    nav a:not(:first-child) {
-        // padding-inline-start: 10px;
-    }
-
-    nav .active {
-        color: $clr1;
-    }
-
-    a:hover {
-        width: 50%;
-        background-color: aliceblue;
-        border-start-start-radius: 50px;
-        border-end-start-radius: 50px;
-        transition: 0.9s;
-    }
 
     @media (max-width:650px) {
         nav {
             position: fixed;
             height: 100vh;
             width: 20%;
+
+            .link-container {
+                padding-inline-start: 0px;
+                display: flex;
+                justify-content: center;
+
+                p {
+                    display: none;
+                }
+            }
         }
     }
 }

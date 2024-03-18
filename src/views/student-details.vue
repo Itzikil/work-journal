@@ -86,7 +86,9 @@ export default {
       }
       classesByMonth[monthKey].push(lesson);
     });
-    this.classes = classesByMonth
+    // this.classes = classesByMonth
+    console.log(classesByMonth);
+    console.log(this.classes);
     this.monthsBackwards(classesByMonth)
   },
   computed: {
@@ -126,11 +128,14 @@ export default {
     //   return classesByMonth
     // },
     monthsBackwards(sortedObj, chosenDate = 0) {
+      console.log(sortedObj);
       let lessonArray = sortedObj || this.classes
       const keys = Object.keys(lessonArray);
       if (this.monthNumber === 0 && chosenDate === 1 || this.monthNumber <= -(keys.length - 3) && chosenDate === -1) return
       else this.monthNumber += chosenDate
-      const index = keys.indexOf(`${this.currYear}-${this.currMonth + 1}`) + this.monthNumber;
+      // const index = keys.indexOf(`${this.currYear}-${this.currMonth + 1}`) + this.monthNumber;
+      const index = keys.indexOf(`2024-2`) + this.monthNumber;
+      console.log(index);
       if (index !== -1 && index >= 2 && index < keys.length) {
         console.log('hi');
         this.classesForMonth = keys.slice(index - 2, index + 1).map(key => lessonArray[key]);

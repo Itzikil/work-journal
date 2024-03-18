@@ -10,7 +10,7 @@
         <p>Earning</p>
         <p>₪ {{ totalMonthEarn().paid }}</p>
       </div>
-      <p>Monthly</p>
+      <p>Monthly {{currMonth}}</p>
       <div>
         <button @click="currMonth++">></button>
         <p>Unpaid</p>
@@ -59,7 +59,8 @@ export default {
   data() {
     return {
       currStudent: null,
-      currMonth: new Date().getMonth()
+      currMonth: new Date().getMonth(),
+      currYear: new Date().getFullYear(),
     }
   },
   async created() {
@@ -92,6 +93,9 @@ export default {
   methods: {
     classesInMonth(student, otherMonth) {
       var month = otherMonth || this.currMonth
+
+      // console.log(`${month}.${this.currYear}`);
+      // console.log(`${student.classes[0].date.split(".")[1]}.${student.classes[0].date.split(".")[2]}`);
       return student.classes.filter(lesson => +lesson.date.split(".")[1] === month + 1)
     },
     paidThisMonth(student) {
