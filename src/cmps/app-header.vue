@@ -10,27 +10,28 @@
       </router-link> -->
       <!-- <div> -->
       <router-link to="/today" class="link-container upper-curve">
-        <div  :class="['a-container', {active: $route.path === '/today'}]">
-          <img src="../assets/imgs/header/today.svg" alt="">
+        <div :class="['a-container', { active: $route.path === '/today' }]">
+          <!-- <img :src=sunday alt=""> -->
+          <img :src=dayPic alt="">
           <p>Today</p>
         </div>
       </router-link>
       <router-link to="/journal" class="link-container">
-        <div :class="['a-container', {active: $route.path === '/journal'}]">
+        <div :class="['a-container', { active: $route.path === '/journal' }]">
           <img src="../assets/imgs/header/calendar.svg" alt="">
           <p>Journal</p>
         </div>
       </router-link>
       <router-link to="/students" class="link-container lower-curve">
-        <div :class="['a-container', {active: $route.path === '/students'}]">
+        <div :class="['a-container', { active: $route.path === '/students' }]">
           <img src="../assets/imgs/header/students.svg" alt="">
           <p>Students</p>
         </div>
       </router-link>
       <!-- <router-link to="/review">Reviews</router-link> -->
       <!-- <router-link to="/chat">Chat</router-link> -->
-      <router-link  v-if="!loggedInUser" to="/login" class="link-container">
-        <div :class="['a-container', {active: $route.path === '/about'}]">
+      <router-link v-if="!loggedInUser" to="/login" class="link-container">
+        <div :class="['a-container', { active: $route.path === '/about' }]">
           <img src="../assets/imgs/header/login.svg" alt="">
           <!-- <p>Login / Signup</p> -->
         </div>
@@ -46,11 +47,29 @@
   </header>
 </template>
 <script>
+import Sunday from '@/assets/imgs/header/day-0.svg'
+import Monday from '@/assets/imgs/header/day-1.svg'
+import Tuesday from '@/assets/imgs/header/day-2.svg'
+import Wednesday from '@/assets/imgs/header/day-3.svg'
+import Thursday from '@/assets/imgs/header/day-4.svg'
+import Friday from '@/assets/imgs/header/day-5.svg'
+import Saturday from '@/assets/imgs/header/day-6.svg'
+
 export default {
   computed: {
     loggedInUser() {
       return this.$store.getters.loggedinUser
     },
+    // console.log(`../assets/imgs/header/day-${new Date().getDay()}.svg`);
+    dayPic() {
+      var days = [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+      return days[new Date().getDay()]
+    },
+  },
+  methods: {
+    // dayPic() {
+    //   return `@/assets/imgs/header/day-1.svg`
+    // },
   }
 }
 </script>

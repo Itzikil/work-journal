@@ -1,7 +1,10 @@
 <template>
   <section v-if="user" class="user-detail-container container">
     <div class="user-details">
-      <h1>User Details - {{ user.fullname }}</h1>
+      <div>
+        <h1>User Details - {{ user.fullname }}</h1>
+        <button @click="doLogout">Logout</button>
+      </div>
       <img :src="user.imgUrl" />
     </div>
     <div class="monthly-income">
@@ -10,7 +13,7 @@
         <p>Earning</p>
         <p>₪ {{ totalMonthEarn().paid }}</p>
       </div>
-      <p> {{monthNames[currentMonth]}} </p>
+      <p> {{ monthNames[currentMonth] }} </p>
       <div>
         <button @click="nextMonth">></button>
         <p>Unpaid</p>
@@ -28,12 +31,6 @@
         <router-link :to="`/student/${student._id}`"></router-link>
       </li>
     </ul>
-    <statistic class="stats" />
-    <div class="some">
-      <p>Total earning this month ₪{{ totalMonthEarn().paid }} from ₪{{ totalMonthEarn().arrived + totalMonthEarn().paid
-      }}
-      </p>
-    </div>
     <div class="student-info">
       <ul v-if="currStudent">
         <li>
@@ -41,12 +38,18 @@
           <p>{{ currStudent.classes.length }} classes overall</p>
           <p>{{ classesInMonth(currStudent).length }} classes this month</p>
           <p>{{ paidThisMonth(currStudent).length }} classes paid this month (₪{{ paidThisMonth(currStudent).length *
-            currStudent.price }})
+    currStudent.price }})
           </p>
           <p>{{ arrivedThisMonth(currStudent).length }} classes unpaid this month (₪{{
-            arrivedThisMonth(currStudent).length * currStudent.price }})</p>
+    arrivedThisMonth(currStudent).length * currStudent.price }})</p>
         </li>
       </ul>
+    </div>
+    <statistic class="stats" :months="months" />
+    <div class="some">
+      <p>Total earning this month ₪{{ totalMonthEarn().paid }} from ₪{{ totalMonthEarn().arrived + totalMonthEarn().paid
+        }}
+      </p>
     </div>
   </section>
 </template>
@@ -90,44 +93,68 @@ export default {
     students() {
       return this.$store.getters.students;
     },
+    months() {
+      var stats = []
+      var month 
+      for (let i = 0; i < 4; i++) {
+        month = this.currentMonth - i
+        if (month < 0) {
+          month = 12 + (this.currentMonth - i)
+        }
+        stats.unshift({
+          name: this.monthNames[month].slice(0, 3),
+          earning: this.monthlySum(`${month +1}.${this.currentYear}`)
+        }
+        )
+      }
+      return stats
+    }
   },
   methods: {
     prevMonth() {
-            this.currentMonth -= 1;
-            if (this.currentMonth < 0) {
-                this.currentMonth = 11;
-                this.currentYear -= 1;
-            }
-        },
-        nextMonth() {
-            this.currentMonth += 1;
-            if (this.currentMonth > 11) {
-                this.currentMonth = 0;
-                this.currentYear += 1;
-            }
-        },
-    classesInMonth(student, otherMonth) {
-      var month = otherMonth || this.currentMonth
+      this.currentMonth -= 1;
+      if (this.currentMonth < 0) {
+        this.currentMonth = 11;
+        this.currentYear -= 1;
+      }
+    },
+    nextMonth() {
+      this.currentMonth += 1;
+      if (this.currentMonth > 11) {
+        this.currentMonth = 0;
+        this.currentYear += 1;
+      }
+    },
+    classesInMonth(student, selectedDate) {
+      var date = selectedDate || `${this.currentMonth + 1}.${this.currentYear}`
       // console.log(`${student.classes[0].date.split(".")[1]}.${student.classes[0].date.split(".")[2]}`);
       // console.log(`${month + 1}.${this.currentYear}`);
-      return student.classes.filter(lesson => `${lesson.date.split(".")[1]}.${lesson.date.split(".")[2]}` === `${month + 1}.${this.currentYear}`)
+      return student.classes.filter(lesson => `${lesson.date.split(".")[1]}.${lesson.date.split(".")[2]}` === date)
     },
-    paidThisMonth(student) {
-      return this.classesInMonth(student).filter(lesson => lesson.status === 'paid')
+    paidThisMonth(student, selectedDate) {
+      return this.classesInMonth(student, selectedDate).filter(lesson => lesson.status === 'paid')
     },
-    arrivedThisMonth(student) {
-      return this.classesInMonth(student).filter(lesson => lesson.status === 'arrived')
+    arrivedThisMonth(student, selectedDate) {
+      return this.classesInMonth(student, selectedDate).filter(lesson => lesson.status === 'arrived')
     },
     openStudentDetails(student) {
       this.currStudent = student
     },
-    totalMonthEarn() {
+    totalMonthEarn(selectedDate) {
       return this.students.reduce((acc, student) => {
-        acc.arrived += this.arrivedThisMonth(student).length * student.price;
-        acc.paid += this.paidThisMonth(student).length * student.price;
+        acc.arrived += this.arrivedThisMonth(student, selectedDate).length * student.price;
+        acc.paid += this.paidThisMonth(student, selectedDate).length * student.price;
         return acc;
       }, { arrived: 0, paid: 0 });
-    }
+    },
+    monthlySum(selectedDate) {
+      var sum = this.totalMonthEarn(selectedDate)
+      return sum.arrived + sum.paid
+    },
+    doLogout() {
+      this.$store.dispatch({ type: 'logout' })
+    },
+
   },
   components: {
     statistic

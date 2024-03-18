@@ -12,27 +12,36 @@
 
 <script>
 export default {
+    props: {
+        months: Array,
+    },
     data() {
         return {
-            months: [
-                {
-                    name: 'jan',
-                    earning: 1200
-                },
-                {
-                    name: 'feb',
-                    earning: 1000
-                },
-                {
-                    name: 'mar',
-                    earning: 500
-                },
-                {
-                    name: 'apr',
-                    earning: 2000
-                },
-            ]
+            // months: [
+            //     {
+            //         name: 'jan',
+            //         earning: 1200
+            //     },
+            //     {
+            //         name: 'feb',
+            //         earning: 1000
+            //     },
+            //     {
+            //         name: 'mar',
+            //         earning: 500
+            //     },
+            //     {
+            //         name: 'apr',
+            //         earning: 2000
+            //     },
+            // ]
         }
+    },
+    created() {
+        console.log(
+            this.months
+
+        );
     },
     methods: {
         highestEarn() {
